@@ -22,6 +22,16 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
+        },
+        // Indian Government colors
+        saffron: "hsl(var(--saffron))",
+        green: "hsl(var(--green))",
+        orange: "hsl(var(--orange))",
+        "govt-blue": {
+          DEFAULT: "hsl(var(--govt-blue))",
+          light: "hsl(var(--govt-blue-light))",
+          dark: "hsl(var(--govt-blue-dark))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -57,6 +67,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        govt: ["Noto Sans", "Inter", "system-ui", "sans-serif"],
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-tricolor": "var(--gradient-tricolor)", 
+        "gradient-card": "var(--gradient-card)",
+      },
+      boxShadow: {
+        govt: "var(--shadow-govt)",
+        card: "var(--shadow-card)",
       },
       borderRadius: {
         lg: "var(--radius)",
