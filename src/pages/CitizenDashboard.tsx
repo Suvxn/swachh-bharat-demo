@@ -12,11 +12,18 @@ import {
   Upload,
   Star,
   Trophy,
-  Recycle
+  Recycle,
+  Truck,
+  MapPin
 } from 'lucide-react';
+import MapboxConfig from '@/components/MapboxConfig';
+import TruckTrackingMap from '@/components/TruckTrackingMap';
+import CitizenLeaderboard from '@/components/CitizenLeaderboard';
+import SmartBinMonitor from '@/components/SmartBinMonitor';
 
 const CitizenDashboard: React.FC = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
+  const [mapboxToken, setMapboxToken] = useState<string>('');
 
   const trainingModules = [
     {
@@ -281,6 +288,67 @@ const CitizenDashboard: React.FC = () => {
                   </motion.li>
                 ))}
               </ul>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* Live Tracking Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.7 }}
+      >
+        <Card className="govt-card">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Truck className="w-5 h-5 text-primary" />
+              <span>Nearby Collection Trucks</span>
+            </CardTitle>
+            <CardDescription>
+              Track waste collection vehicles in your area in real-time
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MapboxConfig onTokenSet={setMapboxToken} />
+            <TruckTrackingMap 
+              token={mapboxToken} 
+              viewMode="citizen"
+              userLocation={[77.2090, 28.6139]}
+            />
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Dynamic Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Leaderboard */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+        >
+          <CitizenLeaderboard />
+        </motion.div>
+
+        {/* Smart Bin Status */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
+        >
+          <Card className="govt-card">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <MapPin className="w-5 h-5 text-primary" />
+                <span>Nearby Smart Bins</span>
+              </CardTitle>
+              <CardDescription>
+                Check the status of smart bins in your neighborhood
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SmartBinMonitor />
             </CardContent>
           </Card>
         </motion.div>

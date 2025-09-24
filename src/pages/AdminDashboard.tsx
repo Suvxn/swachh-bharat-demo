@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -13,8 +13,17 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import MapboxConfig from '@/components/MapboxConfig';
+import TruckTrackingMap from '@/components/TruckTrackingMap';
+import SmartBinMonitor from '@/components/SmartBinMonitor';
+import FacilityQueueStatus from '@/components/FacilityQueueStatus';
+import useAdminAlerts from '@/hooks/useAdminAlerts';
 
 const AdminDashboard: React.FC = () => {
+  const [mapboxToken, setMapboxToken] = useState<string>('');
+  
+  // Enable admin alerts
+  useAdminAlerts();
   const binDistributionData = [
     { id: 1, location: 'Sector 14', distributed: 45, pending: 5, geoTagged: 40, status: 'active' },
     { id: 2, location: 'DLF Phase 2', distributed: 60, pending: 0, geoTagged: 60, status: 'complete' },
@@ -154,6 +163,77 @@ const AdminDashboard: React.FC = () => {
         </motion.div>
       </div>
 
+      {/* Live Tracking and Monitoring */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
+        <Card className="govt-card mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Truck className="w-5 h-5 text-primary" />
+              <span>City-Wide Vehicle Tracking</span>
+            </CardTitle>
+            <CardDescription>
+              Real-time tracking of all waste collection vehicles across the city
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MapboxConfig onTokenSet={setMapboxToken} />
+            <TruckTrackingMap 
+              token={mapboxToken} 
+              viewMode="admin"
+              userLocation={[77.2090, 28.6139]}
+            />
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Smart Bin Monitoring */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
+        <Card className="govt-card mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Trash2 className="w-5 h-5 text-primary" />
+              <span>Smart Bin Network Status</span>
+            </CardTitle>
+            <CardDescription>
+              Monitor fill levels and status of smart bins across all zones
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <SmartBinMonitor />
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Facility Queue Status */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.7 }}
+      >
+        <Card className="govt-card mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <BarChart3 className="w-5 h-5 text-primary" />
+              <span>Processing Facilities Status</span>
+            </CardTitle>
+            <CardDescription>
+              Real-time queue status and efficiency of waste processing facilities
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FacilityQueueStatus />
+          </CardContent>
+        </Card>
+      </motion.div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Smart Bin Distribution */}
         <motion.div
@@ -246,20 +326,20 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Vehicle Tracking */}
+        {/* Vehicle Tracking Legacy View */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
         >
           <Card className="govt-card">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Truck className="w-5 h-5 text-primary" />
-                <span>Vehicle Tracking</span>
+                <span>Vehicle Status Summary</span>
               </CardTitle>
               <CardDescription>
-                Real-time tracking of waste collection vehicles and route completion
+                Quick overview of vehicle performance and route completion
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -274,10 +354,10 @@ const AdminDashboard: React.FC = () => {
                     </div>
                     <span className="text-sm text-muted-foreground">{vehicle.route}</span>
                   </div>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        <MapPin className="w-4 h-4 inline mr-1" />
-                        {vehicle.location}
-                      </p>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    <MapPin className="w-4 h-4 inline mr-1" />
+                    {vehicle.location}
+                  </p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Route Completion</span>
                     <span className="text-sm font-medium">{vehicle.completion}%</span>
@@ -298,7 +378,7 @@ const AdminDashboard: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
         >
           <Card className="govt-card">
             <CardHeader>
