@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
@@ -32,6 +33,7 @@ const WorkerDashboard: React.FC = () => {
     description: '',
     photo: null as string | null,
   });
+  const { toast } = useToast();
 
   const toggleTask = (taskId: number) => {
     setTasks(tasks.map(task => 
@@ -53,6 +55,7 @@ const WorkerDashboard: React.FC = () => {
   const handleIssueSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Issue report submitted:', issueReport);
+    toast({ title: 'Issue reported', description: 'Your report has been sent to admin.' });
     // Reset form
     setIssueReport({
       location: '',

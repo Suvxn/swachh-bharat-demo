@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+# Swaach Saathi (Demo)
 
-## Project info
+Swaach Saathi is a demo web app showcasing a smart waste management companion for citizens, workers, green champions, and ULB admins.
 
-**URL**: https://lovable.dev/projects/eda8f308-4a4d-4c89-a9bb-2dcd14b4ffc1
+## Tech Stack
 
-## How can I edit this code?
+- Vite
+- React + TypeScript
+- Tailwind CSS
+- shadcn-ui
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/eda8f308-4a4d-4c89-a9bb-2dcd14b4ffc1) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Prerequisites: Node.js and npm
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `src/pages`: Role-based dashboards (Citizen, Worker, Champion, Admin)
+- `src/components`: UI components and layout
+- `src/contexts`: Auth context
 
-**Use GitHub Codespaces**
+## Pages & Features
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Citizen Dashboard
+  - Training modules with completion action and toasts
+  - Photo upload with preview and submit-for-review action
+  - Live truck tracking (requires Mapbox token)
+  - Leaderboard and nearby smart bins (simulated live updates)
 
-## What technologies are used for this project?
+- Worker Dashboard
+  - Daily task checklist with toggle completion
+  - Report issue form with photo upload and success toast
+  - Progress summary
 
-This project is built with:
+- Green Champion Dashboard
+  - Manage citizen reports; update status (in progress / resolved)
+  - Field audit form with validations and submission toast
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Admin Dashboard
+  - City-wide vehicle tracking (Mapbox)
+  - Smart bin monitoring and facility queue status
+  - Smart bin distribution and compliance charts
+  - Live roster: drivers/workers with demo Indian phone numbers; quick Call/SMS links
+  - Quick links to view other role dashboards
 
-## How can I deploy this project?
+## Notes
 
-Simply open [Lovable](https://lovable.dev/projects/eda8f308-4a4d-4c89-a9bb-2dcd14b4ffc1) and click on Share -> Publish.
+- This is a demo build for presentation and prototyping purposes.
+- Branding: "Swaach Saathi".
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)

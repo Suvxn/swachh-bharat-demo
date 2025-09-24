@@ -33,10 +33,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div className="flex items-center space-x-4">
               <AshokaEmblem className="w-10 h-10" />
               <div className="text-white">
-                <h1 className="text-xl font-bold tracking-wide">
-                  National Waste Management Portal
-                </h1>
-                <p className="text-xs opacity-90">Government of India</p>
+                <h1 className="text-xl font-bold tracking-wide">Swaach Saathi</h1>
+                <p className="text-xs opacity-90">Demo smart waste management companion</p>
               </div>
             </div>
 
@@ -73,12 +71,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {/* Footer */}
       <footer className="bg-govt-blue text-white py-6 mt-auto">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-sm">
-            © 2024 Government of India. National Waste Management Portal
-          </p>
-          <p className="text-xs opacity-75 mt-1">
-            Developed for sustainable waste management and environmental protection
-          </p>
+          <p className="text-sm">© 2025 Swaach Saathi (Demo)</p>
+          <p className="text-xs opacity-75 mt-1">For demo and prototyping purposes only</p>
         </div>
       </footer>
     </div>

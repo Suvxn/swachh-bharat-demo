@@ -12,9 +12,11 @@ import {
   AlertTriangle,
   CheckCircle2
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import MapboxConfig from '@/components/MapboxConfig';
 import TruckTrackingMap from '@/components/TruckTrackingMap';
+import { Link } from 'react-router-dom';
 import SmartBinMonitor from '@/components/SmartBinMonitor';
 import FacilityQueueStatus from '@/components/FacilityQueueStatus';
 import useAdminAlerts from '@/hooks/useAdminAlerts';
@@ -37,6 +39,13 @@ const AdminDashboard: React.FC = () => {
     { id: 'WM002', route: 'Route B', status: 'maintenance', location: 'DLF Phase 2', completion: 0 },
     { id: 'WM003', route: 'Route C', status: 'active', location: 'Cyber City', completion: 90 },
     { id: 'WM004', route: 'Route D', status: 'active', location: 'Old Gurgaon', completion: 45 },
+  ];
+
+  const liveRoster = [
+    { id: 'DRV101', name: 'Ravi Kumar', role: 'Driver', phone: '+91 98765 43210', vehicle: 'WM001', shift: '06:00-14:00' },
+    { id: 'DRV102', name: 'Aman Verma', role: 'Driver', phone: '+91 99876 54321', vehicle: 'WM003', shift: '06:00-14:00' },
+    { id: 'WRK201', name: 'Sita Devi', role: 'Worker', phone: '+91 91234 56789', assigned: 'Sector 14', shift: '07:00-15:00' },
+    { id: 'WRK202', name: 'Imran Khan', role: 'Worker', phone: '+91 93456 78123', assigned: 'DLF Phase 2', shift: '07:00-15:00' },
   ];
 
   const complianceData = [
@@ -78,6 +87,65 @@ const AdminDashboard: React.FC = () => {
         <p className="text-muted-foreground">
           Monitor waste management operations, track vehicle performance, and ensure compliance across all zones.
         </p>
+      </motion.div>
+
+      {/* Live Roster */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
+        <Card className="govt-card mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Truck className="w-5 h-5 text-primary" />
+              <span>Live Roster (Today)</span>
+            </CardTitle>
+            <CardDescription>
+              Contact drivers and workers on duty today
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Assignment</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {liveRoster.map((person) => (
+                  <TableRow key={person.id}>
+                    <TableCell className="font-medium">{person.id}</TableCell>
+                    <TableCell>{person.name}</TableCell>
+                    <TableCell>{person.role}</TableCell>
+                    <TableCell>
+                      {person.role === 'Driver' ? (
+                        <span>Vehicle {person.vehicle}</span>
+                      ) : (
+                        <span>{person.assigned}</span>
+                      )}
+                      <span className="ml-2 text-xs text-muted-foreground">({person.shift})</span>
+                    </TableCell>
+                    <TableCell>
+                      <a href={`tel:${person.phone.replace(/\s|\+/g, '')}`} className="text-primary hover:underline">{person.phone}</a>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" onClick={() => window.open(`tel:${person.phone.replace(/\s|\+/g, '')}`)}>Call</Button>
+                        <Button size="sm" variant="outline" onClick={() => window.open(`sms:${person.phone.replace(/\s|\+/g, '')}`)}>SMS</Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </motion.div>
 
       {/* Stats Cards */}
@@ -186,6 +254,11 @@ const AdminDashboard: React.FC = () => {
               viewMode="admin"
               userLocation={[77.2090, 28.6139]}
             />
+            <div className="mt-4 flex gap-2">
+              <Link to="/citizen"><Button size="sm" variant="outline">View Citizen Dashboard</Button></Link>
+              <Link to="/worker"><Button size="sm" variant="outline">View Worker Dashboard</Button></Link>
+              <Link to="/champion"><Button size="sm" variant="outline">View Champion Dashboard</Button></Link>
+            </div>
           </CardContent>
         </Card>
       </motion.div>

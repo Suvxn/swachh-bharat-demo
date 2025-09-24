@@ -90,10 +90,8 @@ const LoginPage: React.FC = () => {
           >
             <AshokaEmblem className="w-16 h-16" />
           </motion.div>
-          <h1 className="text-3xl font-bold text-govt-blue mb-2">
-            National Waste Management Portal
-          </h1>
-          <p className="text-muted-foreground">Government of India</p>
+          <h1 className="text-3xl font-bold text-govt-blue mb-2">Swaach Saathi</h1>
+          <p className="text-muted-foreground">Demo smart waste management companion</p>
           <div className="h-1 bg-gradient-tricolor mt-4 rounded-full"></div>
         </div>
 

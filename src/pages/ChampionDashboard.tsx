@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,6 +21,7 @@ import {
 
 const ChampionDashboard: React.FC = () => {
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
+  const { toast } = useToast();
   const [auditData, setAuditData] = useState({
     location: '',
     wasteSegregation: false,
@@ -28,7 +30,7 @@ const ChampionDashboard: React.FC = () => {
     notes: '',
   });
 
-  const citizenReports = [
+  const [citizenReports, setCitizenReports] = useState([
     {
       id: 1,
       citizen: 'Ramesh Gupta',
@@ -59,11 +61,12 @@ const ChampionDashboard: React.FC = () => {
       date: '2024-01-13',
       priority: 'low'
     },
-  ];
+  ]);
 
   const handleAuditSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Audit submitted:', auditData);
+    toast({ title: 'Audit submitted', description: 'Your field audit has been recorded.' });
     // Reset form
     setAuditData({
       location: '',
@@ -72,6 +75,12 @@ const ChampionDashboard: React.FC = () => {
       collectionFrequency: '',
       notes: '',
     });
+  };
+
+  const updateReportStatus = (id: number, status: 'in-progress' | 'resolved' | 'pending') => {
+    setCitizenReports(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+    const msg = status === 'resolved' ? 'Report resolved' : status === 'in-progress' ? 'Marked in progress' : 'Set to pending';
+    toast({ title: msg });
   };
 
   const getStatusColor = (status: string) => {
@@ -229,13 +238,13 @@ const ChampionDashboard: React.FC = () => {
                       className="mt-4 pt-4 border-t space-y-2"
                     >
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" onClick={() => updateReportStatus(report.id, 'in-progress')}>
                           Mark In Progress
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" onClick={() => updateReportStatus(report.id, 'resolved')}>
                           Resolve
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" onClick={() => toast({ title: 'Requested more info' })}>
                           Request More Info
                         </Button>
                       </div>

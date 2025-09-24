@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { 
@@ -23,9 +24,10 @@ import SmartBinMonitor from '@/components/SmartBinMonitor';
 
 const CitizenDashboard: React.FC = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
+  const { toast } = useToast();
   const [mapboxToken, setMapboxToken] = useState<string>('');
 
-  const trainingModules = [
+  const [trainingModules, setTrainingModules] = useState([
     {
       id: 1,
       title: 'Waste Segregation Basics',
@@ -54,7 +56,7 @@ const CitizenDashboard: React.FC = () => {
       duration: '18 min',
       completed: false,
     },
-  ];
+  ]);
 
   const compostingTips = [
     'Mix green waste (kitchen scraps) with brown waste (dry leaves)',
@@ -70,9 +72,20 @@ const CitizenDashboard: React.FC = () => {
       const reader = new FileReader();
       reader.onload = () => {
         setUploadedPhoto(reader.result as string);
+        toast({ title: 'Photo uploaded', description: 'Ready to submit for review.' });
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleStartOrReview = (id: number) => {
+    setTrainingModules(prev => prev.map(m => m.id === id ? { ...m, completed: true } : m));
+    toast({ title: 'Module completed', description: 'Great job completing your training!' });
+  };
+
+  const handleSubmitPhoto = () => {
+    toast({ title: 'Submitted for review', description: 'You will be notified upon approval.' });
+    setUploadedPhoto(null);
   };
 
   return (
@@ -199,6 +212,7 @@ const CitizenDashboard: React.FC = () => {
                       size="sm"
                       variant={module.completed ? "outline" : "default"}
                       className="ml-4"
+                      onClick={() => handleStartOrReview(module.id)}
                     >
                       {module.completed ? 'Review' : 'Start Training'}
                     </Button>
@@ -258,6 +272,7 @@ const CitizenDashboard: React.FC = () => {
                 <Button 
                   className="w-full govt-button"
                   disabled={!uploadedPhoto}
+                  onClick={handleSubmitPhoto}
                 >
                   Submit for Review
                 </Button>

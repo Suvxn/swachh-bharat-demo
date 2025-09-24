@@ -18,12 +18,8 @@ const Index = () => {
         transition={{ duration: 0.6 }}
         className="text-center"
       >
-        <h1 className="text-4xl font-bold text-govt-blue mb-4">
-          Welcome to National Waste Management Portal
-        </h1>
-        <p className="text-xl text-muted-foreground mb-8">
-          Government of India initiative for sustainable waste management
-        </p>
+        <h1 className="text-4xl font-bold text-govt-blue mb-4">Welcome to Swaach Saathi</h1>
+        <p className="text-xl text-muted-foreground mb-8">Smart waste management companion (Demo)</p>
         <div className="h-1 bg-gradient-tricolor rounded-full max-w-md mx-auto"></div>
       </motion.div>
     </div>
